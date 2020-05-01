@@ -1,0 +1,61 @@
+Given a non-empty array of integers, every element appears twice except for one. Find that single one.
+
+Note:
+
+Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+
+Solution:
+Method 1:
+public int singleNumber(int[] nums) {
+        int[] arr = nums;
+		
+		Map<Integer, Integer> mapSet=new HashMap<>();
+		for(Integer num:arr) {
+			if(mapSet.containsKey(num))
+				mapSet.put(num, mapSet.get(num)+1);
+			else
+				mapSet.put(num,1);
+		}
+		List list=new LinkedList(mapSet.entrySet());
+		Collections.sort(list, new Comparator() {
+
+			@Override
+			public int compare(Object o1, Object o2) {
+				// TODO Auto-generated method stub
+				return ((Comparable) ((Map.Entry) (o1)).getValue())
+		                  .compareTo(((Map.Entry) (o2)).getValue());
+			}
+		});
+		 HashMap sortedHashMap = new LinkedHashMap();
+	       for (Iterator it = list.iterator(); it.hasNext();) {
+	              Map.Entry entry = (Map.Entry) it.next();
+	              sortedHashMap.put(entry.getKey(), entry.getValue());
+	       } 
+	       List list2=new LinkedList(sortedHashMap.entrySet());
+	       return Integer.parseInt(list2.get(0).toString().split("=")[0]);
+    }
+    
+    Method 2:
+    
+    public int singleNumber(int[] nums) {
+        int[] arr = nums;
+		
+		Map<Integer, Integer> mapSet=new HashMap<>();
+		for(Integer num:arr) {
+			if(mapSet.containsKey(num))
+				mapSet.put(num, mapSet.get(num)+1);
+			else
+				mapSet.put(num,1);
+		}
+    int no=0;
+    for (int num : arr) {
+			if (mapSet.get(num) == 1) {
+				no= num;
+				break;
+			}
+
+		}
+    
+    return no;
+     }
+    
